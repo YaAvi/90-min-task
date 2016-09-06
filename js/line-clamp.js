@@ -2,10 +2,6 @@
 	'use strict';
 	var elements;
 	function polyfillElement(element) {
-		if (element.style.webkitLineClamp) {
-			return;
-		}
-
 		var textNode = element.children[0];
 		while (textNode.clientHeight > element.clientHeight) {
  		   textNode.innerText = textNode.innerText.replace(/\W*\s(\S)*$/, '...');
@@ -13,16 +9,19 @@
 	}
 
 	function reapply() {
-		elements.forEach(function(element) {
-			var textNode = element.children[0];
-			textNode.innerText = element.dataset.ellipsis;
-			if(textNode.clientHeight > element.clientHeight) {
-				polyfillElement(element);	
+		for (var i = 0; i < elements.length; i++) {
+			var textNode = elements[i].children[0];
+			textNode.innerText = elements[i].dataset.ellipsis;
+			if(textNode.clientHeight > elements[i].clientHeight) {
+				polyfillElement(elements[i]);	
 			}
-		});
+		}
 	}
 
 	function add() {
+		if (typeof(document.body.style.webkitLineClamp) !== "undefined") {
+			return;
+		}
 		elements = document.querySelectorAll('[data-ellipsis]');
 		reapply();
 		window.addEventListener('resize', reapply);

@@ -1,10 +1,10 @@
 p {
     margin: 0;
-    font-size: 4vh;
+    font-size: 20px;
     overflow: hidden;
 }
 
-#para {
+div {
     height: 10vh;
     overflow: hidden;
 }
